@@ -34,11 +34,6 @@ fun NewsButton(
             text = text,
             style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold)
         )
-        Text(
-            text = "ATH",
-            fontSize = 16.sp,
-            color = Color.Red
-        )
     }
 }
 
