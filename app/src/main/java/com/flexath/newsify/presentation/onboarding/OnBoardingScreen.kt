@@ -34,7 +34,9 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnBoardingScreen() {
+fun OnBoardingScreen(
+    onEvent: (OnBoardingEvent) -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -55,9 +57,9 @@ fun OnBoardingScreen() {
 
         val context = LocalContext.current
 
-        HorizontalPager(state = pagerState) { index ->
+        HorizontalPager(state = pagerState) { page ->
             OnBoardingPage(
-                page = pageList[index]
+                page = pageList[page]
             )
         }
 
@@ -98,8 +100,9 @@ fun OnBoardingScreen() {
                     text = buttonState.value[1]
                 ) {
                     coroutineScope.launch {
-                        if (pagerState.currentPage == 3) {
+                        if (pagerState.currentPage == 2) {
                             Toast.makeText(context, "Go to home screen", Toast.LENGTH_SHORT).show()
+                            onEvent(OnBoardingEvent.SaveAppEntry)
                         } else {
                             pagerState.scrollToPage(
                                 page = pagerState.currentPage + 1
@@ -117,6 +120,8 @@ fun OnBoardingScreen() {
 @Composable
 fun OnBoardingScreenPreview() {
     NewsifyTheme {
-        OnBoardingScreen()
+        OnBoardingScreen {
+
+        }
     }
 }
