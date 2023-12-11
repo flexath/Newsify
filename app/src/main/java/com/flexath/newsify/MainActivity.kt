@@ -1,7 +1,6 @@
 package com.flexath.newsify
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -12,17 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.lifecycleScope
-import com.flexath.newsify.domain.usecases.AppEntryUseCases
 import com.flexath.newsify.presentation.MainViewModel
 import com.flexath.newsify.presentation.navgraph.NavGraph
 import com.flexath.newsify.presentation.onboarding.OnBoardingScreen
-import com.flexath.newsify.presentation.onboarding.OnBoardingViewModel
 import com.flexath.newsify.ui.theme.NewsifyTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
