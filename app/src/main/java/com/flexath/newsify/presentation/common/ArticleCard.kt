@@ -32,6 +32,7 @@ import com.flexath.newsify.presentation.Dimens.ArticleCardSize
 import com.flexath.newsify.presentation.Dimens.ExtraSmallPadding
 import com.flexath.newsify.presentation.Dimens.ExtraSmallPadding2
 import com.flexath.newsify.presentation.Dimens.SmallIconSize
+import com.flexath.newsify.presentation.Dimens.SmallPadding1
 import com.flexath.newsify.ui.theme.NewsifyTheme
 
 @Composable
@@ -52,6 +53,10 @@ fun ArticleCard(
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
+                .padding(
+                    start = ExtraSmallPadding,
+                    end = SmallPadding1
+                )
                 .size(ArticleCardSize)
                 .clip(MaterialTheme.shapes.medium)
         )

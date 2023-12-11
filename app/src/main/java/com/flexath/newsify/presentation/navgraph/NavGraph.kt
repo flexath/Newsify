@@ -1,13 +1,14 @@
 package com.flexath.newsify.presentation.navgraph
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavGraph
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.flexath.newsify.presentation.home.HomeScreen
+import com.flexath.newsify.presentation.home.HomeViewModel
 import com.flexath.newsify.presentation.onboarding.OnBoardingScreen
 import com.flexath.newsify.presentation.onboarding.OnBoardingViewModel
 
@@ -41,7 +42,14 @@ fun NavGraph(
             composable(
                 route = Route.NewsNavigatorScreen.route
             ) {
-                Text(text = "News navigator navigation")
+                val viewModel: HomeViewModel = hiltViewModel()
+                val articles = viewModel.news.collectAsLazyPagingItems()
+                HomeScreen(
+                    articles = articles,
+                    navigate = {
+
+                    }
+                )
             }
         }
     }
