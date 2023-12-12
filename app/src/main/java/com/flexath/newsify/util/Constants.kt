@@ -26,4 +26,7 @@ object Constants {
     const val PARAM_PAGE = "page"
     const val PARAM_API_KEY = "apiKey"
     const val PARAM_SOURCES = "sources"
+
+    // General
+    const val DB_NAME = "news_db"
 }

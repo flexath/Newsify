@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.flexath.newsify.presentation.Dimens
 import com.flexath.newsify.presentation.Dimens.MediumPadding1
+import com.flexath.newsify.presentation.Dimens.SmallPadding1
 import com.flexath.newsify.presentation.extensions.shimmerEffect
 import com.flexath.newsify.ui.theme.NewsifyTheme
 
@@ -41,7 +42,7 @@ fun ArticleCardShimmerEffect(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(30.dp)
-                    .padding(horizontal = MediumPadding1)
+                    .padding(horizontal = SmallPadding1)
                     .shimmerEffect()
             )
             Row(
@@ -50,7 +51,7 @@ fun ArticleCardShimmerEffect(modifier: Modifier = Modifier) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(0.5f)
-                        .padding(horizontal = MediumPadding1)
+                        .padding(horizontal = SmallPadding1)
                         .height(15.dp)
                         .shimmerEffect()
                 )

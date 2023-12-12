@@ -1,6 +1,10 @@
 package com.flexath.newsify.di
 
 import android.content.Context
+import androidx.room.Room
+import com.flexath.newsify.data.local.NewsDao
+import com.flexath.newsify.data.local.NewsDatabase
+import com.flexath.newsify.data.local.NewsTypeConverter
 import com.flexath.newsify.data.manager.LocalUserManagerImpl
 import com.flexath.newsify.data.remote.NewsApi
 import com.flexath.newsify.data.repository.NewsRepositoryImpl
@@ -12,6 +16,7 @@ import com.flexath.newsify.domain.usecases.app_entry.SaveAppEntry
 import com.flexath.newsify.domain.usecases.news.GetNews
 import com.flexath.newsify.domain.usecases.news.GetNewsUseCases
 import com.flexath.newsify.util.Constants
+import com.flexath.newsify.util.Constants.DB_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -58,4 +63,18 @@ class AppModule {
         getNewsUseCases = GetNews(repository)
     )
 
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext context: Context): NewsDatabase =
+        Room.databaseBuilder(
+            context = context,
+            klass = NewsDatabase::class.java,
+            name = DB_NAME
+        ).addTypeConverter(NewsTypeConverter::class.java)
+            .fallbackToDestructiveMigration()
+            .build()
+
+    @Provides
+    @Singleton
+    fun provideDao(database: NewsDatabase): NewsDao = database.newsDao
 }
