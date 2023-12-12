@@ -30,7 +30,7 @@ fun NavGraph(
             ) {
                 val viewModel: OnBoardingViewModel = hiltViewModel()
                 OnBoardingScreen {
-                    viewModel.onAppEntryEvent(it)
+                    viewModel.onEvent(it)
                 }
             }
         }

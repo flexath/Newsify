@@ -11,23 +11,32 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key.Companion.H
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
 import com.flexath.newsify.R
 import com.flexath.newsify.domain.model.Article
 import com.flexath.newsify.presentation.Dimens.MediumPadding1
+import com.flexath.newsify.presentation.Dimens.SmallPadding1
 import com.flexath.newsify.presentation.common.ArticleCardList
 import com.flexath.newsify.presentation.common.SearchBar
 import com.flexath.newsify.presentation.navgraph.Route
+import com.flexath.newsify.ui.theme.NewsifyTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -57,16 +66,14 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
             .padding(top = MediumPadding1)
             .statusBarsPadding()
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_splash),
-            contentDescription = null,
-            modifier = Modifier
-                .width(150.dp)
-                .height(30.dp)
-                .padding(horizontal = MediumPadding1)
+
+        Text(
+            text = stringResource(id = R.string.app_name),
+            style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
+            modifier = Modifier.padding(horizontal = MediumPadding1)
         )
 
-        Spacer(modifier = Modifier.height(MediumPadding1))
+        Spacer(modifier = Modifier.height(SmallPadding1))
 
         SearchBar(
             modifier = Modifier.padding(horizontal = MediumPadding1),
@@ -83,7 +90,7 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
             }
         )
 
-        Spacer(modifier = Modifier.height(MediumPadding1))
+        Spacer(modifier = Modifier.height(SmallPadding1))
 
         Text(
             text = titles,
@@ -91,11 +98,10 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
             color = colorResource(id = R.color.placeholder),
             modifier = Modifier
                 .fillMaxWidth()
-
                 .basicMarquee()
         )
 
-        Spacer(modifier = Modifier.height(MediumPadding1))
+        Spacer(modifier = Modifier.height(SmallPadding1))
 
         ArticleCardList(
             modifier = Modifier.padding(horizontal = MediumPadding1),
@@ -104,5 +110,13 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
                 navigate(Route.DetailScreen.route)
             }
         )
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun HomeScreenPreview() {
+    NewsifyTheme {
+
     }
 }

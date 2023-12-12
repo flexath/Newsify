@@ -23,12 +23,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.flexath.newsify.presentation.Dimens
 import com.flexath.newsify.presentation.Dimens.MediumPadding1
 import com.flexath.newsify.presentation.common.NewsButton
 import com.flexath.newsify.presentation.common.NewsTextButton
 import com.flexath.newsify.presentation.onboarding.components.OnBoardingPage
 import com.flexath.newsify.presentation.onboarding.components.PageIndicator
+import com.flexath.newsify.presentation.onboarding.events.OnBoardingEvent
 import com.flexath.newsify.ui.theme.NewsifyTheme
 import kotlinx.coroutines.launch
 
