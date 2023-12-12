@@ -15,12 +15,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.lifecycleScope
+import com.flexath.newsify.data.local.NewsDao
+import com.flexath.newsify.domain.model.Article
+import com.flexath.newsify.domain.model.Source
 import com.flexath.newsify.presentation.MainViewModel
 import com.flexath.newsify.presentation.navgraph.NavGraph
 import com.flexath.newsify.presentation.onboarding.OnBoardingScreen
 import com.flexath.newsify.ui.theme.NewsifyTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -30,6 +36,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window,false)
+
         installSplashScreen().apply {
             setKeepOnScreenCondition {
                 viewModel.splashScreenCondition

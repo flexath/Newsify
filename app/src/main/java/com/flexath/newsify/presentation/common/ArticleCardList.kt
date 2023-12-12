@@ -18,17 +18,37 @@ import com.flexath.newsify.presentation.Dimens.MediumPadding1
 @Composable
 fun ArticleCardList(
     modifier: Modifier = Modifier,
+    articles: List<Article>,
+    onClick: (Article) -> Unit
+) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(MediumPadding1),
+        contentPadding = PaddingValues(ExtraSmallPadding2)
+    ) {
+        items(count = articles.size) { index ->
+            val article = articles[index]
+            ArticleCard(article = article) {
+                onClick(article)
+            }
+        }
+    }
+}
+
+@Composable
+fun ArticleCardList(
+    modifier: Modifier = Modifier,
     articles: LazyPagingItems<Article>,
     onClick: (Article) -> Unit
 ) {
     val handlePagingResult = handlePagingResult(articles = articles)
-    if(handlePagingResult) {
+    if (handlePagingResult) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(MediumPadding1),
             contentPadding = PaddingValues(ExtraSmallPadding2)
         ) {
-            items(count = articles.itemCount) {index ->
+            items(count = articles.itemCount) { index ->
                 articles[index]?.let {
                     ArticleCard(
                         article = it
@@ -58,10 +78,12 @@ fun handlePagingResult(
             ShimmerEffect()
             false
         }
+
         error != null -> {
             EmptyScreen()
             false
         }
+
         else -> true
     }
 }

@@ -13,8 +13,11 @@ import com.flexath.newsify.domain.repository.NewsRepository
 import com.flexath.newsify.domain.usecases.app_entry.AppEntryUseCases
 import com.flexath.newsify.domain.usecases.app_entry.ReadAppEntry
 import com.flexath.newsify.domain.usecases.app_entry.SaveAppEntry
+import com.flexath.newsify.domain.usecases.news.DeleteArticle
 import com.flexath.newsify.domain.usecases.news.GetNews
-import com.flexath.newsify.domain.usecases.news.GetNewsUseCases
+import com.flexath.newsify.domain.usecases.news.InsertArticle
+import com.flexath.newsify.domain.usecases.news.NewsUseCases
+import com.flexath.newsify.domain.usecases.news.GetArticles
 import com.flexath.newsify.util.Constants
 import com.flexath.newsify.util.Constants.DB_NAME
 import dagger.Module
@@ -24,7 +27,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -59,8 +61,14 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideGetNewUseCases(repository: NewsRepository): GetNewsUseCases = GetNewsUseCases(
-        getNewsUseCases = GetNews(repository)
+    fun provideNewUseCases(
+        repository: NewsRepository,
+        dao: NewsDao
+    ): NewsUseCases = NewsUseCases(
+        getNewsUseCases = GetNews(repository),
+        insertArticle = InsertArticle(dao),
+        deleteArticle = DeleteArticle(dao),
+        getArticles = GetArticles(dao)
     )
 
     @Provides
@@ -70,7 +78,7 @@ class AppModule {
             context = context,
             klass = NewsDatabase::class.java,
             name = DB_NAME
-        ).addTypeConverter(NewsTypeConverter::class.java)
+        ).addTypeConverter(NewsTypeConverter())
             .fallbackToDestructiveMigration()
             .build()
 

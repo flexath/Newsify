@@ -7,6 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.flexath.newsify.presentation.bookmark.BookmarkScreen
+import com.flexath.newsify.presentation.bookmark.BookmarkViewModel
 import com.flexath.newsify.presentation.home.HomeScreen
 import com.flexath.newsify.presentation.home.HomeViewModel
 import com.flexath.newsify.presentation.onboarding.OnBoardingScreen
