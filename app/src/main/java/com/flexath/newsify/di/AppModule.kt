@@ -14,6 +14,7 @@ import com.flexath.newsify.domain.usecases.app_entry.AppEntryUseCases
 import com.flexath.newsify.domain.usecases.app_entry.ReadAppEntry
 import com.flexath.newsify.domain.usecases.app_entry.SaveAppEntry
 import com.flexath.newsify.domain.usecases.news.DeleteArticle
+import com.flexath.newsify.domain.usecases.news.GetArticle
 import com.flexath.newsify.domain.usecases.news.GetNews
 import com.flexath.newsify.domain.usecases.news.InsertArticle
 import com.flexath.newsify.domain.usecases.news.NewsUseCases
@@ -68,7 +69,8 @@ class AppModule {
         getNewsUseCases = GetNews(repository),
         insertArticle = InsertArticle(dao),
         deleteArticle = DeleteArticle(dao),
-        getArticles = GetArticles(dao)
+        getArticles = GetArticles(dao),
+        getArticle = GetArticle(dao)
     )
 
     @Provides
