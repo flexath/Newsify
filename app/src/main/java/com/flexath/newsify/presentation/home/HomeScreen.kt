@@ -40,7 +40,7 @@ import com.flexath.newsify.ui.theme.NewsifyTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
+fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (Article) -> Unit) {
     val titles by remember {
         derivedStateOf {
             if (articles.itemCount > 10) {
@@ -52,7 +52,7 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
                         )
                     )
                     .joinToString(separator = "U+1FAE0") {
-                        it.title
+                        it.title ?: ""
                     }
             } else {
                 ""
@@ -69,25 +69,11 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
 
         Text(
             text = stringResource(id = R.string.app_name),
-            style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
+            style = MaterialTheme.typography.displayMedium.copy(fontWeight = FontWeight.Bold),
+            color = colorResource(
+                id = R.color.text_title
+            ),
             modifier = Modifier.padding(horizontal = MediumPadding1)
-        )
-
-        Spacer(modifier = Modifier.height(SmallPadding1))
-
-        SearchBar(
-            modifier = Modifier.padding(horizontal = MediumPadding1),
-            text = "",
-            readOnly = true,
-            onClick = {
-                navigate(Route.SearchScreen.route)
-            },
-            onValueChange = {
-
-            },
-            onSearch = {
-
-            }
         )
 
         Spacer(modifier = Modifier.height(SmallPadding1))
@@ -107,7 +93,7 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
             modifier = Modifier.padding(horizontal = MediumPadding1),
             articles = articles,
             onClick = {
-                navigate(Route.DetailScreen.route)
+                navigate(it)
             }
         )
     }

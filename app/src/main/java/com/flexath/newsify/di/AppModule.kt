@@ -6,7 +6,7 @@ import com.flexath.newsify.data.local.NewsDao
 import com.flexath.newsify.data.local.NewsDatabase
 import com.flexath.newsify.data.local.NewsTypeConverter
 import com.flexath.newsify.data.manager.LocalUserManagerImpl
-import com.flexath.newsify.data.remote.NewsApi
+import com.flexath.newsify.data.remote.api.NewsApi
 import com.flexath.newsify.data.repository.NewsRepositoryImpl
 import com.flexath.newsify.domain.manager.LocalUserManager
 import com.flexath.newsify.domain.repository.NewsRepository
@@ -19,6 +19,7 @@ import com.flexath.newsify.domain.usecases.news.GetNews
 import com.flexath.newsify.domain.usecases.news.InsertArticle
 import com.flexath.newsify.domain.usecases.news.NewsUseCases
 import com.flexath.newsify.domain.usecases.news.GetArticles
+import com.flexath.newsify.domain.usecases.news.SearchNews
 import com.flexath.newsify.util.Constants
 import com.flexath.newsify.util.Constants.DB_NAME
 import dagger.Module
@@ -57,8 +58,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideNewsRepository(newsApi: NewsApi): NewsRepository =
-        NewsRepositoryImpl(newsApi = newsApi)
+    fun provideNewsRepository(newsApi: NewsApi, dao: NewsDao): NewsRepository =
+        NewsRepositoryImpl(newsApi = newsApi,dao)
 
     @Provides
     @Singleton
@@ -67,10 +68,11 @@ class AppModule {
         dao: NewsDao
     ): NewsUseCases = NewsUseCases(
         getNewsUseCases = GetNews(repository),
-        insertArticle = InsertArticle(dao),
-        deleteArticle = DeleteArticle(dao),
-        getArticles = GetArticles(dao),
-        getArticle = GetArticle(dao)
+        searchNews = SearchNews(repository),
+        insertArticle = InsertArticle(repository),
+        deleteArticle = DeleteArticle(repository),
+        getArticles = GetArticles(repository),
+        getArticle = GetArticle(repository)
     )
 
     @Provides

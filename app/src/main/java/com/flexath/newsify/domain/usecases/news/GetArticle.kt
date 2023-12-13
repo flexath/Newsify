@@ -1,11 +1,10 @@
 package com.flexath.newsify.domain.usecases.news
 
-import com.flexath.newsify.data.local.NewsDao
 import com.flexath.newsify.domain.model.Article
-import kotlinx.coroutines.flow.Flow
+import com.flexath.newsify.domain.repository.NewsRepository
 
 class GetArticle(
-    private val dao: NewsDao
+    private val repository: NewsRepository
 ) {
-    operator fun invoke(url:String): Article? = dao.getArticle(url)
+    suspend operator fun invoke(url:String): Article? = repository.getArticle(url)
 }

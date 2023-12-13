@@ -13,20 +13,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import com.flexath.newsify.R
+import com.flexath.newsify.domain.model.Article
 import com.flexath.newsify.presentation.Dimens.MediumPadding1
+import com.flexath.newsify.presentation.Dimens.SmallPadding1
 import com.flexath.newsify.presentation.common.ArticleCardList
 import com.flexath.newsify.presentation.navgraph.Route
 
 @Composable
 fun BookmarkScreen(
     bookmarkState: BookmarkState,
-    navigate: (String) -> Unit
+    navigate: (Article) -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .statusBarsPadding()
-            .padding(top = MediumPadding1, start = MediumPadding1, end = MediumPadding1)
+            .padding(top = MediumPadding1, start = SmallPadding1, end = SmallPadding1)
     ) {
 
         Text(
@@ -37,12 +39,12 @@ fun BookmarkScreen(
             )
         )
 
-        Spacer(modifier = Modifier.height(MediumPadding1))
+        Spacer(modifier = Modifier.height(SmallPadding1))
 
         ArticleCardList(
-            articles = bookmarkState.articles,
+            articles = bookmarkState.articles.reversed(),
             onClick = {
-                navigate(Route.DetailScreen.route)
+                navigate(it)
             }
         )
     }

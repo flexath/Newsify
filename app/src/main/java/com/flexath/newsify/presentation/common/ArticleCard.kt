@@ -69,7 +69,7 @@ fun ArticleCard(
                 .height(ArticleCardSize)
         ) {
             Text(
-                text = article.title,
+                text = article.title ?: "",
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.bodyMedium,
@@ -81,7 +81,7 @@ fun ArticleCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = article.source.name,
+                    text = article.source?.name ?: "",
                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
                     color = colorResource(id = R.color.text_title)
                 )
@@ -98,7 +98,7 @@ fun ArticleCard(
                 Spacer(modifier = Modifier.width(ExtraSmallPadding2))
 
                 Text(
-                    text = article.publishedAt,
+                    text = article.publishedAt ?: "",
                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
                     color = colorResource(id = R.color.body)
                 )
@@ -120,7 +120,8 @@ fun ArticleCardPreview() {
                 source = Source(id = "", name = "BBC"),
                 title = "Her train broke down. Her phone died. And then she met her Saver in a",
                 url = "",
-                urlToImage = "https://ichef.bbci.co.uk/live-experience/cps/624/cpsprodpb/11787/production/_124395517_bbcbreakingnewsgraphic.jpg"
+                urlToImage = "https://ichef.bbci.co.uk/live-experience/cps/624/cpsprodpb/11787/production/_124395517_bbcbreakingnewsgraphic.jpg",
+                isSaved = false
             )
         ) {
 

@@ -2,6 +2,7 @@ package com.flexath.newsify.data.remote
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.flexath.newsify.data.remote.api.NewsApi
 import com.flexath.newsify.domain.model.Article
 
 class NewsPagingSource(

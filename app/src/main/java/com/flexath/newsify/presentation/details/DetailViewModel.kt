@@ -24,12 +24,13 @@ class DetailViewModel @Inject constructor(
         when (event) {
             is DetailEvent.SaveArticle -> {
                 viewModelScope.launch {
-                    val article = newsUseCases.getArticle.invoke(event.article.url)
-                    if (article == null) {
-                        insertArticle(event.article)
-                    } else {
-                        deleteArticle(event.article)
-                    }
+                    insertArticle(article = event.article)
+                }
+            }
+
+            is DetailEvent.DeleteArticle -> {
+                viewModelScope.launch {
+                    deleteArticle(article = event.article)
                 }
             }
 
@@ -40,13 +41,15 @@ class DetailViewModel @Inject constructor(
     }
 
     private suspend fun deleteArticle(article: Article) {
-        newsUseCases.deleteArticle(article = article)
+        article.isSaved = false
+        newsUseCases.deleteArticle.invoke(article = article)
         sideEffect = "Article deleted"
 
     }
 
     private suspend fun insertArticle(article: Article) {
-        newsUseCases.insertArticle(article = article)
+        article.isSaved = true
+        newsUseCases.insertArticle.invoke(article = article)
         sideEffect = "Article saved"
     }
 }

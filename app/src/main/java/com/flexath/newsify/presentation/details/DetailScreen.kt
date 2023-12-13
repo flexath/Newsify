@@ -3,6 +3,8 @@ package com.flexath.newsify.presentation.details
 import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.net.Uri
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +16,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -39,8 +45,21 @@ fun DetailScreen(
 ) {
     val context = LocalContext.current
 
-    Column(modifier = Modifier.fillMaxSize().statusBarsPadding()) {
+    Log.i("ArticleSaved:",article.isSaved.toString())
+
+    var isSaved by remember {
+        mutableStateOf(article.isSaved)
+    }
+
+    Log.i("ArticleSavedRemember:",isSaved.toString())
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+    ) {
         DetailTopAppBar(
+            isSaved = isSaved,
             onBrowsingClick = {
                 Intent(Intent.ACTION_VIEW).also {
                     it.data = Uri.parse(article.url)
@@ -50,7 +69,7 @@ fun DetailScreen(
                 }
             },
             onShareClick = {
-                Intent(Intent.ACTION_SENDTO).also {
+                Intent(Intent.ACTION_SEND).also {
                     it.putExtra(Intent.EXTRA_TEXT, article.url)
                     it.type = "text/plain"
                     if (it.resolveActivity(context.packageManager) != null) {
@@ -59,7 +78,15 @@ fun DetailScreen(
                 }
             },
             onBookmarkClick = {
-                onEvent(DetailEvent.SaveArticle(article))
+                if(!isSaved) {
+                    isSaved = true
+                    article.isSaved = true
+                    onEvent(DetailEvent.SaveArticle(article))
+                } else {
+                    isSaved = false
+                    article.isSaved = false
+                    onEvent(DetailEvent.DeleteArticle(article))
+                }
             },
             onBackClick = navigateUp
         )
@@ -86,7 +113,7 @@ fun DetailScreen(
                 Spacer(modifier = Modifier.height(MediumPadding1))
 
                 Text(
-                    text = article.title,
+                    text = article.title ?: "",
                     style = MaterialTheme.typography.displaySmall,
                     color = colorResource(
                         id = R.color.text_title
@@ -94,7 +121,7 @@ fun DetailScreen(
                 )
 
                 Text(
-                    text = article.content,
+                    text = article.content ?: "",
                     style = MaterialTheme.typography.bodyMedium,
                     color = colorResource(
                         id = R.color.body
@@ -122,7 +149,8 @@ fun DetailScreenPreview() {
                     id = "", name = "bbc"
                 ),
                 url = "https://consent.google.com/ml?continue=https://news.google.com/rss/articles/CBMiaWh0dHBzOi8vY3J5cHRvc2F1cnVzLnRlY2gvY29pbmJhc2Utc2F5cy1hcHBsZS1ibG9ja2VkLWl0cy1sYXN0LWFwcC1yZWxlYXNlLW9uLW5mdHMtaW4td2FsbGV0LXJldXRlcnMtY29tL9IBAA?oc%3D5&gl=FR&hl=en-US&cm=2&pc=n&src=1",
-                urlToImage = "https://media.wired.com/photos/6495d5e893ba5cd8bbdc95af/191:100/w_1280,c_limit/The-EU-Rules-Phone-Batteries-Must-Be-Replaceable-Gear-2BE6PRN.jpg"
+                urlToImage = "https://media.wired.com/photos/6495d5e893ba5cd8bbdc95af/191:100/w_1280,c_limit/The-EU-Rules-Phone-Batteries-Must-Be-Replaceable-Gear-2BE6PRN.jpg",
+                isSaved = false
             ),
             onEvent = {
 

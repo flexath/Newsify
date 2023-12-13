@@ -14,6 +14,7 @@ import androidx.paging.compose.LazyPagingItems
 import com.flexath.newsify.domain.model.Article
 import com.flexath.newsify.presentation.Dimens.ExtraSmallPadding2
 import com.flexath.newsify.presentation.Dimens.MediumPadding1
+import com.flexath.newsify.presentation.Dimens.SmallPadding1
 
 @Composable
 fun ArticleCardList(
@@ -91,11 +92,11 @@ fun handlePagingResult(
 @Composable
 fun ShimmerEffect() {
     Column(
-        verticalArrangement = Arrangement.spacedBy(MediumPadding1)
+        verticalArrangement = Arrangement.spacedBy(SmallPadding1)
     ) {
         repeat(10) {
             ArticleCardShimmerEffect(
-                modifier = Modifier.padding(MediumPadding1)
+                modifier = Modifier.padding(SmallPadding1)
             )
         }
     }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,6 +24,7 @@ import com.flexath.newsify.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailTopAppBar(
+    isSaved: Boolean,
     onBrowsingClick: () -> Unit,
     onShareClick: () -> Unit,
     onBookmarkClick: () -> Unit,
@@ -49,8 +51,13 @@ fun DetailTopAppBar(
         actions = {
             IconButton(onClick = onBookmarkClick) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_bookmark),
-                    contentDescription = null
+                    painter = if (isSaved) {
+                        painterResource(id = R.drawable.baseline_bookmark_24_red)
+                    } else {
+                        painterResource(id = R.drawable.baseline_bookmark_border_24)
+                    },
+                    contentDescription = null,
+                    tint = if(isSaved) colorResource(id = R.color.colorSaved) else colorResource(id = R.color.colorUnsaved)
                 )
             }
             IconButton(onClick = onShareClick) {
@@ -74,6 +81,7 @@ fun DetailTopAppBarPreview() {
         modifier = Modifier.background(color = MaterialTheme.colorScheme.background)
     ) {
         DetailTopAppBar(
+            isSaved = false,
             onBrowsingClick = { },
             onShareClick = { },
             onBookmarkClick = { }) {
