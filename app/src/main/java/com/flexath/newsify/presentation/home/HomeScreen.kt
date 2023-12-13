@@ -51,7 +51,7 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (Article) -> Unit) 
                             endInclusive = 9
                         )
                     )
-                    .joinToString(separator = "U+1FAE0") {
+                    .joinToString(separator = "❤\uFE0F") {
                         it.title ?: ""
                     }
             } else {
